@@ -2227,10 +2227,7 @@ class NetflixAccountInfoExtractor:
         if latest_str:
             lines.append(latest_str)
 
-        # Footer
-        lines.append(f"\n{pe('pc')} <b>Made By :</b> @Lmao_Noob")
-        lines.append(f"{pe('rocket')} <b>Join us :</b> @{CHANNEL_USERNAME}")
-
+ # Footer (watermark removed)
         return "\n".join(lines)
 
     def format_account_info_for_file(self):
