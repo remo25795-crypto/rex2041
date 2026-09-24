@@ -170,36 +170,7 @@ async def send_long_combined_result(update: Update, context: ContextTypes.DEFAUL
 
 
 async def check_channel_membership(update: Update, context: ContextTypes.DEFAULT_TYPE) -> bool:
-    user = update.effective_user
-    if not user:
-        return False
-        
-    if user.id in ADMIN_IDS:
-        return True
-
-    try:
-        member = await context.bot.get_chat_member(chat_id=f'@{CHANNEL_USERNAME}', user_id=user.id)
-        if member.status in ['creator', 'administrator', 'member']:
-            return True
-    except TelegramError as e:
-        logger.error(f"Could not check membership for {user.id} in @{CHANNEL_USERNAME}: {e}")
-        if "chat not found" in str(e).lower() or "bot is not a member" in str(e).lower():
-            logger.critical(f"BOT IS NOT AN ADMIN IN THE CHANNEL @{CHANNEL_USERNAME}. Force join feature will not work.")
-
-    keyboard = [[premium_button("Join Channel", url=CHANNEL_URL, emoji="right", style="primary")]]
-    reply_markup = InlineKeyboardMarkup(keyboard)
-    message = (
-        f"{pe('stop')} <b>Access Denied</b>\n\n"
-        "To use this bot, you must be a member of our channel.\n\n"
-        "Please join the channel and open the bot again."
-    )
-    
-    if update.message:
-        await update.message.reply_html(message, reply_markup=reply_markup)
-    elif update.callback_query:
-        await update.callback_query.message.reply_html(message, reply_markup=reply_markup)
-        
-    return False
+    return True
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
